@@ -1,0 +1,62 @@
+/* eslint-disable jsonc/sort-keys */
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "ES2023",
+    "incremental": true,
+    "declaration": true,
+    "newLine": "lf",
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": true,
+    "preserveConstEnums": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "preserve",
+    "noEmit": true,
+    "isolatedModules": true,
+
+    // Path aliases
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/public/*": ["./public/*"]
+    },
+
+    // Editor support
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "exclude": ["./out/**/*", "./node_modules/**/*", "**/*.spec.ts", "**/*.e2e.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.mts"]
+}

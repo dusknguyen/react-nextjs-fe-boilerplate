@@ -1,0 +1,49 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.env
+dist
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Database
+*.db
+
+# testing
+/coverage
+
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# next.js
+/.next
+/out
+
+# cache
+.swc/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# local folder
+local
+
+# vercel
+.vercel
