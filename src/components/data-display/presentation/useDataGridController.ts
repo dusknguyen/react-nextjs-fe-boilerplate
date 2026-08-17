@@ -1,0 +1,5 @@
+'use client';
+import { useMemo, useState } from 'react';
+import type { DataGridRow, DataGridSort } from '../model/dataGrid';
+import { filterAndSortRows, pageRows } from '../model/dataGrid';
+/** Coordinates data-grid query, sorting, and pagination state for presentation components. */ export function useDataGridController(rows: DataGridRow[], pageSize: number) { const [requestedPage, setPage] = useState(1); const [query, setQuery] = useState(''); const [sort, setSort] = useState<DataGridSort | null>(null); const filteredRows = useMemo(() => filterAndSortRows(rows, query, sort), [query, rows, sort]); const pageResult = pageRows(filteredRows, requestedPage, pageSize); const updateQuery = (value: string) => { setQuery(value); setPage(1); }; const toggleSort = (key: string) => { setSort((current) => ({ direction: current?.key === key && current.direction === 'asc' ? 'desc' : 'asc', key, })); }; return { filteredRows, page: pageResult.page, query, setPage, sort, toggleSort, totalPages: pageResult.totalPages, updateQuery, visibleRows: pageResult.rows, }; }

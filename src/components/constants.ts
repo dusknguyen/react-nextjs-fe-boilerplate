@@ -1,0 +1,10 @@
+/** Supported orientation values for layout-aware components. */ export const componentLayouts = ['vertical', 'horizontal'] as const;
+/** Supported placement values shared by positioned components. */ export const componentPositions = ['top', 'bottom', 'left', 'right', 'start', 'end'] as const;
+/** Supported geometric shapes for controls and indicators. */ export const componentShapes = ['circle', 'square'] as const;
+/** Supported semantic component sizes, ordered from largest to smallest. */ export const componentSizes = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
+/** Status tones used to communicate semantic feedback. */ export const componentStatuses = [ 'info', 'success', 'warning', 'error', ] as const;
+/** Visual treatment variants shared by compatible components. */ export const componentVariants = ['soft', 'dash', 'outline'] as const;
+/** Brand-oriented color tokens. */ export const brandColors = [ 'neutral', 'primary', 'secondary', 'accent', ] as const;
+/** Complete component color vocabulary, including status and ghost tones. */ export const componentColors = [ ...brandColors, 'ghost', ...componentStatuses, ] as const;
+/** Background surface color tokens. */ export const bgColors = ['base-100', 'base-200', 'base-300', 'neutral'] as const;
+/** Theme applied when a consumer does not select one explicitly. */ export const defaultTheme = 'light';

@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false
+  },
+  "include": [
+    "nativewind-env.d.ts",
+    "types/**/*.d.ts",
+    "src/app/**/*.tsx",
+    "src/components/**/*.tsx",
+    "src/features/**/*.tsx",
+    "src/lib/**/*.ts",
+    "src/modules/**/*.ts",
+    "src/modules/**/*.tsx",
+    "src/store/**/*.ts",
+    "src/views/**/*.tsx"
+  ],
+  "exclude": ["node_modules", ".expo", ".next", "dist"]
+}

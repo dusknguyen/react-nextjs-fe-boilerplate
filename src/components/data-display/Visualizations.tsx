@@ -1,0 +1,15 @@
+import type { InheritedComponentProps } from '../types'; import { Text, View } from 'react-native';
+import { cn } from '../core/cn';
+const widths = ['w-[10%]', 'w-1/4', 'w-1/3', 'w-1/2', 'w-2/3', 'w-3/4', 'w-[90%]', 'w-full'];
+const barTones = ['bg-brand-500', 'bg-emerald-500', 'bg-orange-500', 'bg-sky-500', 'bg-violet-500'];
+const tileTones = ['bg-brand-100 dark:bg-brand-950', 'bg-emerald-100 dark:bg-emerald-950', 'bg-orange-100 dark:bg-orange-950', 'bg-sky-100 dark:bg-sky-950'];
+function widthBucket(value: number, maximum: number) { return Math.min(widths.length - 1, Math.max(0, Math.ceil((value / maximum) * widths.length) - 1)); }
+
+/** Renders the bar chart component. */
+export function BarChart({ data }: InheritedComponentProps<{ data: { label: string; value: number; }[]; }>) { const maximum = Math.max(...data.map((item) => item.value), 1); return (<View accessibilityLabel="Bar chart" className="gap-4 rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-900">{data.map((item, index) =><View key={item.label}><View className="mb-2 flex-row justify-between"><Text className="font-bold text-slate-700 dark:text-slate-200">{item.label}</Text><Text className="font-mono font-black text-slate-950 dark:text-white">{item.value}</Text></View><View className="h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"><View className={cn('h-full rounded-full', widths[widthBucket(item.value, maximum)], barTones[index % barTones.length])}/></View></View>)}</View>); }
+
+/** Renders the image list component. */
+export function ImageList({ items }: InheritedComponentProps<{ items: { caption?: string; title: string; }[]; }>) { return <View className="flex-row flex-wrap gap-3">{items.map((item, index) =><View className={cn('min-h-32 min-w-36 flex-1 justify-end rounded-3xl p-4', tileTones[index % tileTones.length])} key={item.title}><View className="h-10 w-10 items-center justify-center rounded-2xl bg-white/70 dark:bg-slate-900/70"><Text className="font-black text-slate-700 dark:text-slate-200">{index + 1}</Text></View><Text className="mt-5 font-black text-slate-950 dark:text-white">{item.title}</Text>{item.caption ? <Text className="mt-1 text-xs text-slate-600 dark:text-slate-300">{item.caption}</Text> : null}</View>)}</View>; }
+
+/** Renders the meter group component. */
+export function MeterGroup({ meters }: InheritedComponentProps<{ meters: { label: string; tone?: 'brand' | 'success' | 'warning'; value: number; }[]; }>) { const tones = { brand: 'bg-brand-500', success: 'bg-emerald-500', warning: 'bg-amber-500' } as const; return <View className="gap-4">{meters.map((meter) =><View key={meter.label}><View className="mb-2 flex-row justify-between"><Text className="font-bold text-slate-700 dark:text-slate-200">{meter.label}</Text><Text className="font-mono font-black text-slate-950 dark:text-white">{meter.value}%</Text></View><View className="h-3 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"><View className={cn('h-full rounded-full', widths[widthBucket(meter.value, 100)], tones[meter.tone ?? 'brand'])}/></View></View>)}</View>; }

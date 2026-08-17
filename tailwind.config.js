@@ -1,12 +1,14 @@
+const { theme, themeVariablesPlugin } = require('./tailwind.shared');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // NOTE: Update this to include the paths to all of your component files.
-  content: ["./app/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("nativewind/preset")],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    require('daisyui'),
+  darkMode: 'class',
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
   ],
+  important: 'html',
+  presets: [require('nativewind/preset')],
+  theme,
+  plugins: [themeVariablesPlugin],
 };
