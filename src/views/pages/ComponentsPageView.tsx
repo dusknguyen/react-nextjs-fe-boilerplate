@@ -4,6 +4,7 @@ import { Text, View } from 'react-native';
 
 import { NativeWindComponentCatalog } from '@/src/features/gallery/NativeWindComponentCatalog';
 import { PrimitiveBoundaryShowcase } from '@/src/features/gallery/PrimitiveBoundaryShowcase';
+import { demoComponentCount } from '@/src/features/gallery/component-demo/catalog';
 import { appRoutes } from '@/src/modules/navigation/domain/appRoute';
 import type { PageNavigationPort } from '@/src/modules/navigation/ports/navigation';
 import { AppPageShell } from '@/src/views/layout/AppPageShell';
@@ -15,7 +16,7 @@ type ComponentsPageViewProps = {
 };
 
 const galleryStats = [
-  { label: 'Component demos', value: '100' },
+  { label: 'Interactive APIs', value: String(demoComponentCount) },
   { label: 'Shared routes', value: String(appRoutes.length) },
   { label: 'Appearance modes', value: '3' },
   { label: 'Accent palettes', value: '4' },

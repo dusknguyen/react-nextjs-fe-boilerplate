@@ -6,6 +6,15 @@ import type {
   LocationPort,
   RuntimeDiagnosticsPort,
 } from '../ports/libraryCapabilities';
+import type { LibraryLabPort } from '../ports/libraryLab';
+
+export type LibraryLabDependencies = {
+  content: ContentSelectionPort;
+  diagnostics: RuntimeDiagnosticsPort;
+  external: ExternalActionPort;
+  feedback: DeviceFeedbackPort;
+  location: LocationPort;
+};
 
 export function createLibraryLabService({
   content,
@@ -13,13 +22,7 @@ export function createLibraryLabService({
   external,
   feedback,
   location,
-}: {
-  content: ContentSelectionPort;
-  diagnostics: RuntimeDiagnosticsPort;
-  external: ExternalActionPort;
-  feedback: DeviceFeedbackPort;
-  location: LocationPort;
-}) {
+}: LibraryLabDependencies): LibraryLabPort {
   return {
     canShare: () => external.canShare(),
     copy: (text: string) => feedback.copy(text),

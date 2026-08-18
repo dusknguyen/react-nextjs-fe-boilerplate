@@ -177,6 +177,22 @@ export type AppRouteId = AppRoute['id'];
 export type AppRoutePath = AppRoute['path'];
 export type AppRouteGroup = AppRoute['group'];
 
+export const appRouteAliases = {
+  components: { path: '/components', target: 'components' },
+  foundations: { path: '/foundations', target: 'foundations' },
+  advancedComponents: { path: '/advanced-components', target: 'advancedComponents' },
+  showcase: { path: '/showcase', target: 'showcase' },
+  libraries: { path: '/libraries', target: 'libraries' },
+} as const satisfies Record<string, { path: `/${string}`; target: AppRouteId }>;
+
+export type AppRouteAliasId = keyof typeof appRouteAliases;
+export type AppRouteAliasPath = (typeof appRouteAliases)[AppRouteAliasId]['path'];
+
+export const sharedPagePaths: readonly (AppRoutePath | AppRouteAliasPath)[] = [
+  ...appRoutes.map((route) => route.path),
+  ...Object.values(appRouteAliases).map((alias) => alias.path),
+];
+
 export const appRouteGroups = [...new Set(appRoutes.map((route) => route.group))] as AppRouteGroup[];
 
 const routesById = new Map<AppRouteId, AppRoute>(appRoutes.map((route) => [route.id, route]));
@@ -197,6 +213,10 @@ export function getAppRoute(id: AppRouteId): AppRoute {
   const route = routesById.get(id);
   if (!route) throw new Error(`Unknown app route: ${id}`);
   return route;
+}
+
+export function getAppRouteAliasTarget(id: AppRouteAliasId): AppRoutePath {
+  return getAppRoute(appRouteAliases[id].target).path;
 }
 
 export function getRoutesInGroup(group: AppRouteGroup): AppRoute[] {

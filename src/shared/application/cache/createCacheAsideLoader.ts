@@ -1,10 +1,23 @@
 import type { AsyncCachePort } from '../../ports/asyncCache';
 
-export interface CacheAsideLoader<Key, Value> {
+/** Minimal synchronous cache inspection capability. */
+export interface CacheInspector<Key> {
   has(key: Key): boolean;
+}
+
+/** Async value loading capability used by consumers that need the result. */
+export interface AsyncValueLoader<Key, Value> {
   load(key: Key): Promise<Value>;
+}
+
+/** Fire-and-forget read-ahead capability used by navigation and hover intents. */
+export interface AsyncValuePreloader<Key> {
   preload(key: Key): void;
 }
+
+export type CacheAsideLoader<Key, Value> = CacheInspector<Key>
+  & AsyncValueLoader<Key, Value>
+  & AsyncValuePreloader<Key>;
 
 export function createCacheAsideLoader<Key, Value>(
   {

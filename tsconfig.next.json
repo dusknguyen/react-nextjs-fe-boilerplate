@@ -8,13 +8,19 @@
     "types/**/*.d.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts",
+    "app/**/*.ts",
     "app/**/*.tsx",
+    "src/components/**/*.ts",
     "src/components/**/*.tsx",
+    "src/composition/**/*.ts",
+    "src/composition/**/*.tsx",
+    "src/features/**/*.ts",
     "src/features/**/*.tsx",
-    "src/lib/**/*.ts",
     "src/modules/**/*.ts",
     "src/modules/**/*.tsx",
-    "src/store/**/*.ts",
+    "src/shared/**/*.ts",
+    "src/shared/**/*.tsx",
+    "src/views/**/*.ts",
     "src/views/**/*.tsx"
   ],
   "exclude": [
@@ -22,10 +28,8 @@
     ".expo",
     ".next/cache",
     "dist",
-    "app/_legacy-prime",
-    "app/demo",
-    "app/layout",
-    "app/types",
-    "components/components"
+    "dist-*",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
   ]
 }

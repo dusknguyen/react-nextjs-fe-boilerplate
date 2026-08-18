@@ -2,6 +2,7 @@
 
 import { View } from 'react-native';
 
+import { libraryLabService } from '@/src/modules/libraries/composition/libraryModule';
 import type { PageNavigationPort } from '@/src/modules/navigation/ports/navigation';
 import { AppPageShell } from '@/src/views/layout/AppPageShell';
 
@@ -28,8 +29,8 @@ export default function LibraryEcosystemLab({ navigation }: { navigation: PageNa
         <VisualLibraryDemos />
         <ValidationDemo />
         <View className="gap-6 lg:flex-row">
-          <RuntimeDiagnosticsPanel />
-          <UniversalActionsPanel />
+          <RuntimeDiagnosticsPanel diagnostics={libraryLabService} />
+          <UniversalActionsPanel actions={libraryLabService} />
         </View>
       </View>
     </AppPageShell>

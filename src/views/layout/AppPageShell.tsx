@@ -4,8 +4,7 @@ import type { ReactNode } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useColorScheme } from 'nativewind';
 
-import { AppSafeAreaView, SectionHeading } from '@/src/components';
-import { cn } from '@/src/lib/cn';
+import { AppSafeAreaView, cn, SectionHeading } from '@/src/components';
 import {
   appRouteGroups,
   appRoutes,

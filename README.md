@@ -1,96 +1,152 @@
-# 🚀 Expo + Next.js + React Native Boilerplate
+# Expo + Next.js + React Native Boilerplate
 
-This project integrates **Expo**, **Next.js**, and **React Native**, offering seamless cross-platform development.
+Một codebase dùng chung UI React Native cho:
 
-## 📂 Project Structure
+- Expo / Android / iOS
+- Expo Web
+- Next.js App Router
+- NativeWind 4 + Tailwind CSS 3
+- TypeScript strict
 
-- **app/**: Main application folder
-  - **(native)**: Expo-specific components and screens
-  - **(next)**: Next.js-specific components and pages
-  - `_layout.tsx`: Layout configuration
-  - `layout.tsx`: Main layout for Next.js
-  - `not-found.tsx`: 404 page
-- **assets/**: Static assets (images, fonts, etc.)
-- **components/**: Reusable UI components
-- **config/**: Configuration files
-- **constants/**: Global constants
-- **hooks/**: Custom React hooks
-- **scripts/**: Automation scripts
-- **store/**: State management
-- **style/**: Global styles
-- **vendors/**: Third-party libraries and utilities
+## Yêu cầu
 
-## 🚀 Quick Start Guide
+- Node.js >= 22.13.0
+- npm
 
-### 1️⃣ Install dependencies
+Project chỉ giữ `package-lock.json` để tránh lệch dependency giữa npm và Yarn.
+
+## Cài đặt
+
 ```bash
-npm install
+npm ci
 ```
 
-### 2️⃣ Start Expo
+## Chạy project
+
+### Next.js
+
+```bash
+npm run dev
+```
+
+### Expo
+
 ```bash
 npm run expo:start
 ```
-**Run on:**
-- **Android emulator**
-- **iOS simulator**
-- **Expo Go**
-- **Web**
 
-### 3️⃣ Start Next.js
+Hoặc:
+
 ```bash
-npm run next:dev
+npm run expo:android
+npm run expo:ios
+npm run expo:web
 ```
 
-## 🛠 Essential Scripts
+## Kiểm tra trước khi commit
 
-- `npm run expo:start` → Start Expo
-- `npm run expo:android` → Run Expo on Android
-- `npm run expo:ios` → Run Expo on iOS
-- `npm run expo:web` → Run Expo on Web
-- `npm run next:dev` → Start Next.js (Development)
-- `npm run next:build` → Build Next.js (Production)
-- `npm run next:start` → Start Next.js (Production)
-- `npm run expo:reset-project` → Reset Expo Project
-- `npm run lint` → Run ESLint
-- `npm run expo:test` → Run Jest Tests
-
-## 🛠 Configuration Files
-
-- `app.json`: Expo configuration
-- `babel.config.js`: Babel setup
-- `metro.config.js`: Metro bundler config
-- `next.config.js`: Next.js configuration
-- `tailwind.config.js`: TailwindCSS setup
-- `tsconfig.json`: TypeScript configuration
-- `postcss.config.mjs`: PostCSS configuration
-
-## 📦 Dependencies
-
-### Core
-- `expo`, `next`, `react`, `react-dom`, `react-native`, `expo-router`, `zustand`
-
-### UI & Styling
-- `tailwindcss`, `daisyui`, `nativewind`, `react-native-svg`
-
-### Utilities & Plugins
-- `expo-auth-session`, `expo-constants`, `expo-document-picker`, `expo-font`, `expo-linking`, `expo-splash-screen`, `expo-status-bar`
-- `react-native-mmkv`, `react-native-reanimated`, `react-native-safe-area-context`, `react-native-screens`, `react-native-webview`
-
-### Development Tools
-- `eslint`, `jest`, `jest-expo`, `typescript`, `babel-preset-expo`
-
-## 🧹 Reset Project
-Run:
 ```bash
-npm run expo:reset-project
+npm run check
 ```
 
-## 📖 Learn More
-- [🚀 Expo Documentation](https://docs.expo.dev/)
-- [⚡ Next.js Documentation](https://nextjs.org/docs)
-- [📱 React Native Documentation](https://reactnative.dev/)
-- [💬 Expo Community](https://chat.expo.dev)
+`check` chạy lần lượt:
 
+1. TypeScript cho shared/Expo và Next.js.
+2. ESLint.
+3. Jest.
 
+## Styling
 
+Project dùng hai lớp styling, mỗi lớp có nhiệm vụ riêng:
+
+### NativeWind
+
+Dùng `className` cho style tĩnh và style phụ thuộc UI state:
+
+- spacing, flexbox, typography
+- responsive breakpoint
+- dark mode
+- hover/focus/active trên web
+- theme token
+
+Ví dụ:
+
+```tsx
+<View className="flex-1 items-center justify-center bg-white dark:bg-slate-950">
+  <Text className="text-lg font-bold text-slate-950 dark:text-white">Hello</Text>
+</View>
+```
+
+### React Native StyleSheet
+
+Dùng `StyleSheet` cho style native đặc biệt hoặc giá trị runtime mà utility class không phù hợp, ví dụ `StyleSheet.absoluteFillObject`.
+
+Không tạo object style tĩnh mới trong mỗi lần render nếu có thể đưa ra ngoài component.
+
+Animation vẫn dùng `style` vì giá trị `Animated.Value` thay đổi ở runtime.
+
+## Cấu hình NativeWind
+
+- `babel.config.js`: Babel preset cho Expo.
+- `metro.config.js`: `withNativeWind` cho Metro.
+- `tailwind.native.config.js`: scan source Expo/native.
+- `tailwind.config.js`: scan cả Next.js `app/` và shared `src/`, đồng thời tăng CSS specificity cho web.
+- `style/global.css`: Tailwind directives dùng chung.
+- `nativewind-env.d.ts`: type augmentation cho `className`.
+
+## Cấu trúc chính
+
+```text
+app/                         # Next.js routes
+src/app/                     # Expo Router routes
+src/components/              # Shared React Native UI
+src/composition/providers/   # App-level providers
+src/features/                # Feature composition / demo pages
+src/modules/                 # Domain + application + adapters
+src/shared/                  # Shared infrastructure
+src/views/                   # Shared page views
+style/                       # Global Tailwind CSS
+```
+
+Next.js và Expo chỉ giữ router adapter mỏng. Nội dung màn hình nằm trong `src/views` để không nhân đôi UI.
+
+`appRoutes` và `appRouteAliases` trong `src/modules/navigation/domain/appRoute.ts` là route contract dùng chung. Hiện Next.js và Expo cùng cung cấp 19 trang canonical và 5 alias; `routeParity.test.ts` kiểm tra cả URL lẫn shared screen id. Loading, not-found và error UI cũng dùng chung view. Route Handler `/api/health` là delivery adapter Serverless/FaaS riêng của Next.js; nó không phải trang điều hướng và Expo Web vẫn giữ chế độ static export.
+
+## Component demo
+
+Catalog tương tác nằm tại `/ui` trên Next.js và Expo Web. Demo được tổ chức theo capability trong `src/features/gallery/component-demo/`:
+
+- Mỗi section import trực tiếp các component cần dùng và tự quản lý state.
+- Section được lazy-load, cache promise và preload khi hover/chọn tab.
+- Tab `Universal toolkit` minh họa semantic UI, animation, collection, mobile, desktop và platform primitives.
+- Metadata catalog là nguồn duy nhất cho filter, nhãn và số lượng API demo.
+
+Route tương thích `/components` tự chuyển hướng về `/ui`.
+
+## Scripts
+
+```text
+npm run dev                  Next.js development
+npm run build                Next.js production build
+npm run start                Start Next.js production server
+npm run lint                 ESLint
+npm run typecheck            TypeScript + Next route type generation
+npm run test                 Jest
+npm run test:architecture    Kiểm tra dependency direction và module boundaries
+npm run test:watch           Jest watch mode
+npm run check                Typecheck + lint + test
+npm run doctor               Expo dependency/configuration diagnostics
+npm run verify               Check + Next production build + Expo Web export
+npm run expo:start           Expo development server
+npm run expo:android         Expo Android
+npm run expo:ios             Expo iOS
+npm run expo:web             Expo Web
+```
+
+## Chính sách dependency
+
+- Dùng `package-lock.json` và npm; không duy trì nhiều lockfile song song.
+- Expo/RN package theo phiên bản do SDK 57 xác nhận qua `npx expo install --check`.
+- Package thuần JavaScript dùng bản stable mới nhất trong peer-dependency range.
+- Không tự động dùng preview/canary hoặc `npm audit fix --force` vì có thể phá ABI native.
+- NativeWind 4 stable đi cùng Tailwind CSS 3.4; NativeWind 5/Tailwind 4 chỉ được nâng khi bản stable được phát hành.

@@ -9,7 +9,7 @@ export type AppErrorViewProps = {
 
 export function AppErrorView({ error, onRetry }: AppErrorViewProps) {
   return (
-    <View className="min-h-screen items-center justify-center bg-canvas-light px-6 py-12 dark:bg-canvas-dark">
+    <View className="min-h-screen items-center justify-center bg-slate-50 px-6 py-12 dark:bg-slate-950">
       <View className="w-full max-w-xl rounded-[32px] border border-danger-200 bg-white p-7 shadow-xl dark:border-danger-800 dark:bg-slate-900">
         <Text className="text-xs font-black uppercase tracking-[2px] text-danger-600 dark:text-danger-300">
           Application error

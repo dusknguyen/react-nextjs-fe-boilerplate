@@ -5,12 +5,14 @@ import { format } from 'date-fns';
 import { Text, View } from 'react-native';
 
 import { AppButton, SectionHeading, Surface } from '@/src/components';
-import { libraryLabService } from '@/src/modules/libraries/composition/libraryModule';
+import type { LibraryDiagnosticsPort } from '@/src/modules/libraries/ports/libraryLab';
 
-export function RuntimeDiagnosticsPanel() {
+export function RuntimeDiagnosticsPanel({ diagnostics: diagnosticsPort }: {
+  diagnostics: LibraryDiagnosticsPort;
+}) {
   const diagnostics = useQuery({
     queryKey: ['library-lab', 'runtime-diagnostics'],
-    queryFn: () => libraryLabService.readDiagnostics(),
+    queryFn: () => diagnosticsPort.readDiagnostics(),
   });
 
   const snapshot = diagnostics.data;

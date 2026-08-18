@@ -302,7 +302,7 @@ export default function FoundationsPageView({ navigation }: { navigation: PageNa
       </Dialog>
 
       <Snackbar
-        action={<Button onPress={() => setSnackbarOpen(false)} shape="pill" size="small" variant="ghost">Close</Button>}
+        action={<Button className="web:hover:bg-white/10" onPress={() => setSnackbarOpen(false)} shape="pill" size="small" textClassName="text-white" variant="ghost">Close</Button>}
         autoHideDuration={4000}
         message="Your changes were saved."
         onClose={() => setSnackbarOpen(false)}

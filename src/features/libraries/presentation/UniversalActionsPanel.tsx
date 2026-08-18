@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { Platform, Text, View } from 'react-native';
 
 import { AppButton, SectionHeading, Surface } from '@/src/components';
-import { libraryLabService } from '@/src/modules/libraries/composition/libraryModule';
 import type { SelectedAsset } from '@/src/modules/libraries/domain/library';
+import type { LibraryActionsPort } from '@/src/modules/libraries/ports/libraryLab';
 
-export function UniversalActionsPanel() {
+export function UniversalActionsPanel({ actions }: { actions: LibraryActionsPort }) {
   const [asset, setAsset] = useState<SelectedAsset | null>(null);
   const [message, setMessage] = useState('Choose an action. Permission prompts only run after your tap.');
 
@@ -29,13 +29,13 @@ export function UniversalActionsPanel() {
         title="Universal device actions"
       />
       <View className="flex-row flex-wrap gap-2">
-        <AppButton onPress={() => void run('Copied the lab URL.', () => libraryLabService.copy('https://reactnative.directory/packages?android=true&web=true'))} size="small">Clipboard</AppButton>
-        <AppButton onPress={() => void run('Haptic feedback requested.', () => libraryLabService.pulse())} size="small" variant="secondary">Haptic</AppButton>
-        <AppButton onPress={() => { libraryLabService.speak('Universal React Native libraries lab'); setMessage('Speech requested.'); }} size="small" variant="secondary">Speak</AppButton>
-        <AppButton onPress={() => void run('Opened React Native Directory.', () => libraryLabService.openDirectory())} size="small" variant="secondary">Open directory</AppButton>
+        <AppButton onPress={() => void run('Copied the lab URL.', () => actions.copy('https://reactnative.directory/packages?android=true&web=true'))} size="small">Clipboard</AppButton>
+        <AppButton onPress={() => void run('Haptic feedback requested.', () => actions.pulse())} size="small" variant="secondary">Haptic</AppButton>
+        <AppButton onPress={() => { actions.speak('Universal React Native libraries lab'); setMessage('Speech requested.'); }} size="small" variant="secondary">Speak</AppButton>
+        <AppButton onPress={() => void run('Opened React Native Directory.', () => actions.openDirectory())} size="small" variant="secondary">Open directory</AppButton>
         <AppButton
           onPress={() => void run('Image picker completed.', async () => {
-            const selected = await libraryLabService.pickImage();
+            const selected = await actions.pickImage();
             if (selected) setAsset(selected);
           })}
           size="small"
@@ -45,7 +45,7 @@ export function UniversalActionsPanel() {
         </AppButton>
         <AppButton
           onPress={() => void run('Document picker completed.', async () => {
-            const selected = await libraryLabService.pickDocument();
+            const selected = await actions.pickDocument();
             if (selected) setAsset(selected);
           })}
           size="small"
@@ -55,7 +55,7 @@ export function UniversalActionsPanel() {
         </AppButton>
         <AppButton
           onPress={() => void run('Location resolved.', async () => {
-            const coordinates = await libraryLabService.locate();
+            const coordinates = await actions.locate();
             setMessage(coordinates ? `${coordinates.latitude.toFixed(4)}, ${coordinates.longitude.toFixed(4)}` : 'Location permission was not granted.');
           })}
           size="small"
@@ -64,7 +64,7 @@ export function UniversalActionsPanel() {
           Locate
         </AppButton>
         {asset && Platform.OS !== 'web' ? (
-          <AppButton onPress={() => void run(`Shared ${asset.name}.`, () => libraryLabService.share(asset))} size="small" variant="secondary">Share file</AppButton>
+          <AppButton onPress={() => void run(`Shared ${asset.name}.`, () => actions.share(asset))} size="small" variant="secondary">Share file</AppButton>
         ) : null}
       </View>
 

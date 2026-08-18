@@ -15,6 +15,7 @@ const defaultThemeVariables = {
 };
 
 const variableColor = (name) => `rgb(var(--color-${name}) / <alpha-value>)`;
+const uiVariableColor = (name) => `rgb(var(--ui-${name}) / <alpha-value>)`;
 
 // Shared semantic color scales for the same NativeWind API on native and web.
 const colorPalette = {
@@ -60,6 +61,23 @@ const theme = {
         light: variableColor('canvas-light'),
         dark: variableColor('canvas-dark'),
       },
+      ui: {
+        canvas: uiVariableColor('canvas'),
+        surface: uiVariableColor('surface'),
+        'surface-muted': uiVariableColor('surface-muted'),
+        text: uiVariableColor('text'),
+        'text-muted': uiVariableColor('text-muted'),
+        border: uiVariableColor('border'),
+        primary: uiVariableColor('primary'),
+        'primary-foreground': uiVariableColor('primary-foreground'),
+        secondary: uiVariableColor('secondary'),
+        'secondary-foreground': uiVariableColor('secondary-foreground'),
+        success: uiVariableColor('success'),
+        warning: uiVariableColor('warning'),
+        danger: uiVariableColor('danger'),
+        info: uiVariableColor('info'),
+        focus: uiVariableColor('focus'),
+      },
       blue: colorPalette.blue,
       indigo: colorPalette.indigo,
       purple: colorPalette.purple,
@@ -79,6 +97,30 @@ const theme = {
       danger: withDefault(colorPalette.red, colorPalette.red[500]),
       light: withDefault(colorPalette.gray, colorPalette.gray[100]),
       dark: withDefault(colorPalette.gray, colorPalette.gray[900]),
+    },
+    spacing: {
+      'ui-xs': 'var(--ui-space-xs)',
+      'ui-sm': 'var(--ui-space-sm)',
+      'ui-md': 'var(--ui-space-md)',
+      'ui-lg': 'var(--ui-space-lg)',
+      'ui-xl': 'var(--ui-space-xl)',
+      'ui-2xl': 'var(--ui-space-2xl)',
+      'ui-3xl': 'var(--ui-space-3xl)',
+    },
+    borderRadius: {
+      'ui-sm': 'var(--ui-radius-sm)',
+      'ui-md': 'var(--ui-radius-md)',
+      'ui-lg': 'var(--ui-radius-lg)',
+      'ui-xl': 'var(--ui-radius-xl)',
+    },
+    fontSize: {
+      'ui-xs': 'var(--ui-font-xs)',
+      'ui-sm': 'var(--ui-font-sm)',
+      'ui-md': 'var(--ui-font-md)',
+      'ui-lg': 'var(--ui-font-lg)',
+      'ui-xl': 'var(--ui-font-xl)',
+      'ui-2xl': 'var(--ui-font-2xl)',
+      'ui-3xl': 'var(--ui-font-3xl)',
     },
   },
 };

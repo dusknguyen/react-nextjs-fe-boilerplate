@@ -2,13 +2,9 @@ const path = require('node:path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Next 16 keeps a small set of recently visited routes in React Activity,
-  // preserving local UI state and avoiding unnecessary remounts on back/forward.
-  cacheComponents: true,
   reactStrictMode: true,
-  // Expo requires the NativeWind Babel preset. Force Next to keep using its
-  // compiler so tsconfig's jsxImportSource="nativewind" is honored on web.
   experimental: {
+    // Expo needs Babel, while Next should keep its faster SWC transform.
     forceSwcTransforms: true,
   },
   typescript: {
@@ -45,14 +41,15 @@ const nextConfig = {
     'expo-web-browser',
     'moti',
     'react-native-calendars',
+    // react-native-calendars depends on this package and it ships untranspiled JS.
+    'react-native-swipe-gestures',
     'react-native-marked',
     'react-native-qrcode-svg',
     'react-native-svg',
   ],
   webpack(config, { webpack }) {
-    // A few Android + Web packages in React Native Directory publish Flow or
-    // raw JSX. Keep the compatibility adapter narrowly scoped to those
-    // packages so the rest of Next continues through SWC.
+    // These React Native packages publish Flow syntax that SWC does not strip.
+    // Keep the Babel compatibility boundary limited to third-party source.
     config.module.rules.push({
       test: /\.[jt]sx?$/,
       include: [

@@ -7,13 +7,24 @@
     "nativewind-env.d.ts",
     "types/**/*.d.ts",
     "src/app/**/*.tsx",
+    "src/components/**/*.ts",
     "src/components/**/*.tsx",
+    "src/features/**/*.ts",
     "src/features/**/*.tsx",
-    "src/lib/**/*.ts",
     "src/modules/**/*.ts",
     "src/modules/**/*.tsx",
-    "src/store/**/*.ts",
+    "src/shared/**/*.ts",
+    "src/shared/**/*.tsx",
+    "src/views/**/*.ts",
     "src/views/**/*.tsx"
   ],
-  "exclude": ["node_modules", ".expo", ".next", "dist"]
+  "exclude": [
+    "node_modules",
+    ".expo",
+    ".next",
+    "dist",
+    "dist-*",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
 }

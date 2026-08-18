@@ -2,62 +2,43 @@
   "extends": "./node_modules/expo/tsconfig.base.json",
   "compilerOptions": {
     "strict": true,
-    "incremental": true,
-    "module": "esnext",
-    "isolatedModules": true,
-    "jsx": "react-native",
-    "jsxImportSource": "nativewind",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
     "noEmit": true,
-    "esModuleInterop": true,
+    "incremental": true,
+    "jsxImportSource": "nativewind",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    },
-    "declaration": true,
-    "newLine": "lf",
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "removeComments": true,
-    "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "outDir": "dist",
-    "strictPropertyInitialization": true
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
+    "nativewind-env.d.ts",
+    "types/**/*.d.ts",
+    "next-env.d.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
     ".next/types/**/*.ts",
-    "next.config.ts",
-    "nativewind-env.d.ts"
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
-  "types": [
-    "tailwindcss"
+  "exclude": [
+    "node_modules",
+    ".expo",
+    ".next/cache",
+    "dist",
+    "dist-*"
   ]
 }
